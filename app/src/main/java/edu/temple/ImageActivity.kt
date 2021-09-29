@@ -59,18 +59,17 @@ class MainActivity : AppCompatActivity() {
 
             val pics = Picture(imageId[i], heading[i])
             newArrayList.add(pics)
+
         }
 
         var adapter = PictureAdapter(newArrayList)
         newRecyclerView.adapter = adapter
 
-        adapter.setOnItemClickListener(object: PictureAdapter.onItemClickListener) {
+        adapter.setOnItemClickListener(object: PictureAdapter.onItemClickListener {
             override fun onItemClick(position: Int) {
                 Toast.makeText(this@MainActivity, "you clicked on $position", Toast.LENGTH_SHORT ).show()
             }
-        }
-
-
+        })
 
     }
 
