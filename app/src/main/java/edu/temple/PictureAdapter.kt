@@ -6,49 +6,51 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.imageview.ShapeableImageView
+import android.widget.ImageView
 
-class PictureAdapter(private val mPictures: ArrayList<Picture>) : RecyclerView.Adapter<PictureAdapter.MyViewHolder>() {
 
-  lateinit var mListener: onItemClickListener
-
+class ImageAdapter (private val GhostRiderArray: Array<Picture>) : RecyclerView.Adapter<ImageAdapter.ViewHolder>()
+{
+    private lateinit var mListener : onItemClickListener
     interface onItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position : Int)
     }
-
-    fun setOnItemClickListener(listener: onItemClickListener) {
+    fun setOnItemClickListener(listener: onItemClickListener){
         mListener = listener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_picture,
-        parent, false)
-        return MyViewHolder(itemView, mListener)
-    }
+    inner class ViewHolder(itemView: View, listener: onItemClickListener) : RecyclerView.ViewHolder(itemView) {
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val currentItem = mPictures[position]
-        holder.titleImage.setImageResource(currentItem.titleImage)
-        holder.tvHeading.text = currentItem.heading
-    }
-
-    override fun getItemCount(): Int {
-        return mPictures.size
-    }
-
-    class MyViewHolder(itemView: View, listener: onItemClickListener): RecyclerView.ViewHolder(itemView)
-    {
-        val titleImage : ShapeableImageView = itemView.findViewById(R.id.title_image)
-        val tvHeading : TextView = itemView.findViewById(R.id.tvHeading)
-
+        val imageView = itemView.findViewById<ImageView>(R.id.itemHolder)
         init{
-
             itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
         }
+    }
 
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageAdapter.ViewHolder {
+        val context = parent.context
+        val inflater = LayoutInflater.from(context)
+
+        val contactView = inflater.inflate(R.layout.item_holder, parent, false)
+
+        return ViewHolder(contactView,mListener)
+    }
+
+
+    override fun onBindViewHolder(viewHolder: ImageAdapter.ViewHolder, position: Int) {
+
+        val GhostRider: Picture = GhostRiderArray[position]
+
+        val imageView = viewHolder.imageView
+        imageView.setImageResource(GhostRider.heading)
+    }
+
+
+    override fun getItemCount(): Int {
+        return GhostRiderArray.size
     }
 
 }
-

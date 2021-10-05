@@ -1,3 +1,3 @@
 package edu.temple
 
-data class Picture(var titleImage : Int, var heading : String)
+data class Picture(var titleImage: String, var heading: Int)
